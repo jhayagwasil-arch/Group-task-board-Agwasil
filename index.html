@@ -10,12 +10,17 @@
 
   <header class="topbar">
     <h1>Group Task Board</h1>
-    <p>Jhay Agwasil</p>
+    <p>Group 4 &middot; Web Development Project</p>
   </header>
 
   <form class="toolbar" id="taskForm">
     <input type="text" id="taskInput" placeholder="Task name" maxlength="60">
-    <input type="text" id="ownerInput" placeholder="Assigned to" maxlength="20">
+    
+    <!-- Replaced select with a datalist input -->
+    <input type="text" list="memberList" id="ownerInput" placeholder="Assigned to" maxlength="20">
+    <datalist id="memberList">
+      <!-- Names will be added here automatically -->
+    </datalist>
 
     <select id="priorityInput">
       <option value="low">Low</option>
@@ -34,7 +39,6 @@
   </form>
 
   <main class="board">
-
     <section class="column" data-status="todo">
       <div class="column-head">
         <h2>To Do</h2>
@@ -58,7 +62,6 @@
       </div>
       <div class="task-list" id="list-done"></div>
     </section>
-
   </main>
 
   <script src="script.js"></script>
