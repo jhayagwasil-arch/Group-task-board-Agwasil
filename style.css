@@ -11,6 +11,7 @@ body {
   padding: 30px;
 }
 
+/* Header */
 .topbar {
   background: #1565C0;
   color: #fff;
@@ -30,6 +31,7 @@ body {
   opacity: 0.9;
 }
 
+/* Toolbar Form */
 .toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -42,6 +44,7 @@ body {
   margin-bottom: 30px;
 }
 
+/* Inputs and Selects */
 .toolbar input,
 .toolbar select {
   height: 44px;
@@ -65,8 +68,7 @@ body {
 }
 
 #ownerInput {
-  width: 170px;
-  cursor: pointer;
+  width: 160px;
 }
 
 .toolbar select {
@@ -74,6 +76,7 @@ body {
   cursor: pointer;
 }
 
+/* Buttons */
 .toolbar button {
   height: 44px;
   padding: 0 20px;
@@ -101,6 +104,7 @@ body {
   background: #78909C;
 }
 
+/* Board Layout */
 .board {
   display: flex;
   gap: 24px;
@@ -142,6 +146,7 @@ body {
   min-height: 200px;
 }
 
+/* Task Cards */
 .task-card {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
@@ -173,6 +178,7 @@ body {
   margin-bottom: 14px;
 }
 
+/* Action Buttons */
 .task-actions {
   display: flex;
   gap: 8px;
@@ -202,6 +208,7 @@ body {
   background: #ffcdd2;
 }
 
+/* Empty State */
 .empty {
   color: #90a4ae;
   font-size: 14px;
@@ -210,6 +217,7 @@ body {
   font-style: italic;
 }
 
+/* Responsive */
 @media (max-width: 800px) {
   .board {
     flex-direction: column;
