@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Group Task Board</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <h1>Group Task Board</h1>
+    <p>Jhay Agwasil</p>
+  </header>
+
+  <form class="toolbar" id="taskForm">
+    <input type="text" id="taskInput" placeholder="Task name" maxlength="60">
+    <input type="text" id="ownerInput" placeholder="Assigned to" maxlength="20">
+
+    <select id="priorityInput">
+      <option value="low">Low</option>
+      <option value="medium" selected>Medium</option>
+      <option value="high">High</option>
+    </select>
+
+    <select id="statusInput">
+      <option value="todo" selected>To Do</option>
+      <option value="progress">In Progress</option>
+      <option value="done">Done</option>
+    </select>
+
+    <button type="submit" id="addBtn">Add Task</button>
+    <button type="button" id="clearBtn">Clear All</button>
+  </form>
+
+  <main class="board">
+
+    <section class="column" data-status="todo">
+      <div class="column-head">
+        <h2>To Do</h2>
+        <span class="count" id="count-todo">0</span>
+      </div>
+      <div class="task-list" id="list-todo"></div>
+    </section>
+
+    <section class="column" data-status="progress">
+      <div class="column-head">
+        <h2>In Progress</h2>
+        <span class="count" id="count-progress">0</span>
+      </div>
+      <div class="task-list" id="list-progress"></div>
+    </section>
+
+    <section class="column" data-status="done">
+      <div class="column-head">
+        <h2>Done</h2>
+        <span class="count" id="count-done">0</span>
+      </div>
+      <div class="task-list" id="list-done"></div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
