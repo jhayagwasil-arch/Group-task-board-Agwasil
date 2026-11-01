@@ -3,7 +3,7 @@ const TASKS_KEY = 'groupTaskBoard.tasks';
 const taskForm = document.getElementById('taskForm');
 const taskInput = document.getElementById('taskInput');
 const ownerInput = document.getElementById('ownerInput');
-const memberList = document.getElementById('memberList'); // New datalist element
+const memberList = document.getElementById('memberList');
 const priorityInput = document.getElementById('priorityInput');
 const statusInput = document.getElementById('statusInput');
 const clearBtn = document.getElementById('clearBtn');
@@ -13,9 +13,12 @@ let tasks = [];
 
 function loadTasks() {
   const saved = localStorage.getItem(TASKS_KEY);
+  
+  // If there is no saved data, return an empty array (empty board)
   if (saved === null) {
     return [];
   }
+  
   try {
     return JSON.parse(saved);
   } catch (e) {
@@ -34,6 +37,7 @@ function render() {
   statuses.forEach(function (status) {
     const list = document.getElementById('list-' + status);
     const count = document.getElementById('count-' + status);
+    
     const filtered = tasks.filter(function (t) {
       return t.status === status;
     });
@@ -104,12 +108,11 @@ function addTask(e) {
     return;
   }
 
-  // Logic to save new names to the datalist automatically
+  // Add new owner names to the datalist automatically
   if (ownerName !== "") {
     let exists = false;
     const options = memberList.querySelectorAll('option');
     
-    // Check if name is already in the list
     for (let i = 0; i < options.length; i++) {
       if (options[i].value.toLowerCase() === ownerName.toLowerCase()) {
         exists = true;
@@ -117,7 +120,6 @@ function addTask(e) {
       }
     }
     
-    // If it's a new name, add it to the datalist
     if (!exists) {
       const newOption = document.createElement('option');
       newOption.value = ownerName;
@@ -172,7 +174,8 @@ function clearAll() {
     tasks = [];
     saveTasks();
     render();
-    // Optional: Clear the member list too
+    
+    // Clear the saved names list too
     memberList.innerHTML = ''; 
   }
 }
@@ -200,6 +203,7 @@ taskForm.addEventListener('submit', addTask);
 clearBtn.addEventListener('click', clearAll);
 window.addEventListener('resize', render);
 
+// Start the app
 tasks = loadTasks();
 render();
 taskInput.focus();
