@@ -3,29 +3,23 @@ const TASKS_KEY = 'groupTaskBoard.tasks';
 const taskForm = document.getElementById('taskForm');
 const taskInput = document.getElementById('taskInput');
 const ownerInput = document.getElementById('ownerInput');
+const memberList = document.getElementById('memberList'); // New datalist element
 const priorityInput = document.getElementById('priorityInput');
 const statusInput = document.getElementById('statusInput');
 const clearBtn = document.getElementById('clearBtn');
 const board = document.querySelector('.board');
-
-// Start with a couple of example tasks if localStorage is empty
-const defaultTasks = [
-  { id: 1, name: 'Design homepage mockup', owner: 'Mia', priority: 'high', status: 'todo' },
-  { id: 2, name: 'Set up project repo', owner: 'Leo', priority: 'medium', status: 'progress' },
-  { id: 3, name: 'Write README', owner: 'Sam', priority: 'low', status: 'done' }
-];
 
 let tasks = [];
 
 function loadTasks() {
   const saved = localStorage.getItem(TASKS_KEY);
   if (saved === null) {
-    return defaultTasks.slice();
+    return [];
   }
   try {
     return JSON.parse(saved);
   } catch (e) {
-    return defaultTasks.slice();
+    return [];
   }
 }
 
@@ -35,12 +29,11 @@ function saveTasks() {
 
 function render() {
   const statuses = ['todo', 'progress', 'done'];
+  const isMobile = window.innerWidth <= 800;
 
   statuses.forEach(function (status) {
     const list = document.getElementById('list-' + status);
     const count = document.getElementById('count-' + status);
-    
-    // Filter tasks for this specific column
     const filtered = tasks.filter(function (t) {
       return t.status === status;
     });
@@ -72,23 +65,20 @@ function render() {
       const actions = document.createElement('div');
       actions.className = 'task-actions';
 
-      // Back button (if not in To Do)
       if (task.status !== 'todo') {
         const prev = document.createElement('button');
         prev.dataset.action = 'prev';
-        prev.textContent = '← Move Left';
+        prev.textContent = isMobile ? '↑ Move Up' : '← Move Left';
         actions.appendChild(prev);
       }
 
-      // Next button (if not in Done)
       if (task.status !== 'done') {
         const next = document.createElement('button');
         next.dataset.action = 'next';
-        next.textContent = 'Move Right →';
+        next.textContent = isMobile ? '↓ Move Down' : 'Move Right →';
         actions.appendChild(next);
       }
 
-      // Delete button
       const del = document.createElement('button');
       del.dataset.action = 'delete';
       del.className = 'del';
@@ -107,15 +97,38 @@ function addTask(e) {
   e.preventDefault();
 
   const name = taskInput.value.trim();
+  const ownerName = ownerInput.value.trim();
+
   if (!name) {
     alert('Please enter a task name.');
     return;
   }
 
+  // Logic to save new names to the datalist automatically
+  if (ownerName !== "") {
+    let exists = false;
+    const options = memberList.querySelectorAll('option');
+    
+    // Check if name is already in the list
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].value.toLowerCase() === ownerName.toLowerCase()) {
+        exists = true;
+        break;
+      }
+    }
+    
+    // If it's a new name, add it to the datalist
+    if (!exists) {
+      const newOption = document.createElement('option');
+      newOption.value = ownerName;
+      memberList.appendChild(newOption);
+    }
+  }
+
   tasks.push({
     id: Date.now(),
     name: name,
-    owner: ownerInput.value.trim(),
+    owner: ownerName,
     priority: priorityInput.value,
     status: statusInput.value
   });
@@ -123,7 +136,6 @@ function addTask(e) {
   saveTasks();
   render();
 
-  // Reset form
   taskInput.value = '';
   ownerInput.value = '';
   taskInput.focus();
@@ -160,10 +172,11 @@ function clearAll() {
     tasks = [];
     saveTasks();
     render();
+    // Optional: Clear the member list too
+    memberList.innerHTML = ''; 
   }
 }
 
-// Event Listeners
 board.addEventListener('click', function (e) {
   const btn = e.target.closest('button[data-action]');
   if (!btn) return;
@@ -185,8 +198,8 @@ board.addEventListener('click', function (e) {
 
 taskForm.addEventListener('submit', addTask);
 clearBtn.addEventListener('click', clearAll);
+window.addEventListener('resize', render);
 
-// Initialize App
 tasks = loadTasks();
 render();
 taskInput.focus();
