@@ -2,40 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Group Task Board</title>
+  <!-- Added Google Fonts for a premium look -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <header class="topbar">
-    <h1>Group Task Board</h1>
-    <p>Jhay Agwasil</p>
+    <div class="logo-area">
+      <h1>TaskFlow</h1>
+      <span class="badge">Group 4</span>
+    </div>
+    <p>Manage your team's web development sprint.</p>
   </header>
 
   <form class="toolbar" id="taskForm">
-    <input type="text" id="taskInput" placeholder="Task name" maxlength="60">
+    <div class="input-group">
+      <input type="text" id="taskInput" placeholder="What needs to be done?" maxlength="60" required>
+    </div>
     
-    <!-- Datalist input for assigning tasks -->
-    <input type="text" list="memberList" id="ownerInput" placeholder="Assigned to" maxlength="20">
-    <datalist id="memberList">
-      <!-- New names will be added here automatically -->
-    </datalist>
+    <div class="input-group">
+      <input type="text" list="memberList" id="ownerInput" placeholder="Assignee" maxlength="20">
+      <datalist id="memberList"></datalist>
+    </div>
 
-    <select id="priorityInput">
-      <option value="low">Low</option>
-      <option value="medium" selected>Medium</option>
-      <option value="high">High</option>
-    </select>
+    <div class="input-group">
+      <select id="priorityInput">
+        <option value="low">Low Priority</option>
+        <option value="medium" selected>Medium Priority</option>
+        <option value="high">High Priority</option>
+      </select>
+    </div>
 
-    <select id="statusInput">
-      <option value="todo" selected>To Do</option>
-      <option value="progress">In Progress</option>
-      <option value="done">Done</option>
-    </select>
+    <div class="input-group">
+      <select id="statusInput">
+        <option value="todo" selected>To Do</option>
+        <option value="progress">In Progress</option>
+        <option value="done">Done</option>
+      </select>
+    </div>
 
-    <button type="submit" id="addBtn">Add Task</button>
-    <button type="button" id="clearBtn">Clear All</button>
+    <button type="submit" id="addBtn" class="btn-primary">+ Add Task</button>
+    <button type="button" id="clearBtn" class="btn-danger">Clear Board</button>
   </form>
 
   <main class="board">
